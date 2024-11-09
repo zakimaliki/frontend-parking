@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from "react";
 import ParkingMap from "./components/ParkingMap";
 import FormCheckout from "./components/FormCheckout";
@@ -13,7 +12,7 @@ const App = () => {
   return (
     <div className="container mt-5 text-center">
       <h1 className="text-center mb-4">Parking Management System</h1>
-      <p><strong>Klik slot hijau untuk booking parkir. Slot merah berarti terisi.</strong></p>
+      <p><strong>Klik slot <span className="text-success">hijau</span> untuk booking parkir. <br/>Slot <span className="text-danger">hijau</span> berarti sudah terisi.</strong></p>
       <FormCheckout onCheckoutComplete={handleCheckoutComplete} />
       <ParkingMap refresh={refreshParkingMap} />
     </div>

@@ -1,4 +1,3 @@
-// components/ParkingMap.js
 import React, { useEffect, useState } from "react";
 import { Stage, Layer, Rect, Image } from "react-konva";
 import { Modal, Button, Form } from "react-bootstrap";
