@@ -46,7 +46,7 @@ const FormCheckout = ({ onCheckoutComplete }) => {
           body: JSON.stringify({ status: false }),
         });
 
-        await fetch(`http://localhost:80/reservationForms/${booking.slot_id}`, {
+        await fetch(`http://localhost:80/reservationForms/${booking.id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" }
         });

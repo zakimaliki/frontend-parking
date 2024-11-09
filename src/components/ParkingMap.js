@@ -62,6 +62,10 @@ const ParkingMap = ({ refresh }) => {
         body: JSON.stringify({ status: true }),
       });
 
+      setName("")
+      setDuration("")
+      setCarNumber("")
+
       setSlots(
         slots.map((slot) =>
           slot.id === selectedSlot.id ? { ...slot, occupied: true } : slot
