@@ -41,12 +41,16 @@ const ParkingMap = ({ refresh }) => {
 
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
+    const startTime = new Date();
+    const endTime = new Date(startTime.getTime() + (parseInt(duration) * 60 * 60 * 1000));
+    
     const newBooking = {
       name,
       vehicle_number: carNumber,
       parking_duration: duration,
       slot_id: selectedSlot.id,
-      start_time: new Date().toISOString(),
+      start_time: startTime.toISOString(),
+      end_time: endTime.toISOString(),
     };
 
     const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:80'; // Add fallback

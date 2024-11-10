@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { calculateParkingFee } from "../utils/parkingCountPrice";
 
 const FormCheckout = ({ onCheckoutComplete }) => {
   const [checkoutCarNumber, setCheckoutCarNumber] = useState("");
@@ -18,20 +19,13 @@ const FormCheckout = ({ onCheckoutComplete }) => {
       const booking = reservations.find((res) => res.vehicle_number === checkoutCarNumber);
 
       if (booking) {
-        const startTime = new Date(booking.start_time);
         const endTime = new Date();
-        const parkingDuration = Math.ceil((endTime - startTime) / (1000 * 60 * 60));
-        const originalDuration = parseInt(booking.parking_duration);
+        const { fee } = calculateParkingFee(
+          booking.start_time,
+          endTime,
+          parseInt(booking.parking_duration)
+        );
 
-        let fee;
-        if (parkingDuration > originalDuration) {
-          const overtime = parkingDuration - originalDuration;
-          fee = (originalDuration * 2000) + (overtime * 4000);
-        } else {
-          fee = parkingDuration * 2000;
-        }
-
-        setParkingFee(fee);
         setCheckoutDetails({
           name: booking.name,
           vehicle_number: booking.vehicle_number,
