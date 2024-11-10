@@ -15,7 +15,7 @@ const ParkingMap = ({ refresh }) => {
   useEffect(() => {
     const loadParkingSlots = async () => {
       try {
-        const response = await fetch("http://localhost:80/parkingSlots");
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/parkingSlots`);
         const data = await response.json();
         setSlots(data.map((slot) => ({ ...slot, occupied: slot.status })));
       } catch (error) {
@@ -49,14 +49,20 @@ const ParkingMap = ({ refresh }) => {
       start_time: new Date().toISOString(),
     };
 
+    const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:80'; // Add fallback
+    
     try {
-      await fetch("http://localhost:80/reservationForms", {
+      console.log('Booking URL:', `${baseUrl}/reservationForms`); // Debug log
+      
+      await fetch(`${baseUrl}/reservationForms`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBooking),
       });
 
-      await fetch(`http://localhost:80/parkingSlots/${selectedSlot.id}`, {
+      console.log('Update slot URL:', `${baseUrl}/parkingSlots/${selectedSlot.id}`); // Debug log
+      
+      await fetch(`${baseUrl}/parkingSlots/${selectedSlot.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: true }),

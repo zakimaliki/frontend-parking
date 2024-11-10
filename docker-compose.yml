@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://json-server:80  # untuk komunikasi antar container
+      - REACT_APP_API_URL=http://localhost:80  # untuk akses dari browser
+    depends_on:
+      - json-server
+
+  json-server:
+    image: clue/json-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/db.json:/data/db.json
+    command: --watch /data/db.json --host 0.0.0.0

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -11,7 +13,7 @@ const FormCheckout = ({ onCheckoutComplete }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:80/reservationForms`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/reservationForms`);
       const reservations = await response.json();
       const booking = reservations.find((res) => res.vehicle_number === checkoutCarNumber);
 
@@ -40,13 +42,13 @@ const FormCheckout = ({ onCheckoutComplete }) => {
         });
         setShowCheckoutModal(true);
 
-        await fetch(`http://localhost:80/parkingSlots/${booking.slot_id}`, {
+        await fetch(`${process.env.REACT_APP_API_URL}/parkingSlots/${booking.slot_id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status: false }),
         });
 
-        await fetch(`http://localhost:80/reservationForms/${booking.id}`, {
+        await fetch(`${process.env.REACT_APP_API_URL}/reservationForms/${booking.id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" }
         });
