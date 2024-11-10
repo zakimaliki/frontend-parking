@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Menambahkan semua perubahan
 git add .
 
@@ -7,6 +5,6 @@ git add .
 git commit -m "update"
 
 # Melakukan push ke remote repository
-git push
+git push origin master
 
 echo "Berhasil melakukan add, commit, dan push!"
